@@ -1,9 +1,4 @@
 
-
-## Requirements
-
-(Red Hat / CentOS only) Requires the EPEL repository, which can be installed with the `geerlingguy.repo-epel` role.
-
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
