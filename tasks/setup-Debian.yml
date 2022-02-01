@@ -1,0 +1,87 @@
+---
+- name: Adding Pre-Reqs
+  apt:
+    name:
+      - gnupg2
+      - apt-transport-https
+      - software-properties-common
+    state: present
+    #update_cache: true
+  become: true
+#   register: result
+#   until: result is successful
+
+- name: Adding RabbitMQ Keys 
+  apt_key:
+    url: "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"
+    state: present
+  become: yes
+
+- name: Adding erlang Repo
+  apt_repository: 
+    repo : deb https://packages.erlang-solutions.com/ubuntu focal contrib 
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Adding Rabbitmq erlang repo
+  #shell: echo "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ focal contrib"  | sudo tee /etc/apt/sources.list.d/rabbitmq.list
+  shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.deb.sh | sudo bash
+
+- name: Installing ERLang 
+  apt:
+    pkg:
+     - erlang=1:23.3.1-1
+     - erlang-appmon=1:23.3.1-1 
+     - erlang-asn1=1:23.3.1-1
+     - erlang-base=1:23.3.1-1
+     - erlang-common-test=1:23.3.1-1
+     - erlang-crypto=1:23.3.1-1 
+     - erlang-debugger=1:23.3.1-1
+     - erlang-dev=1:23.3.1-1
+     - erlang-dialyzer=1:23.3.1-1
+     - erlang-diameter=1:23.3.1-1
+     - erlang-edoc=1:23.3.1-1
+     - erlang-eldap=1:23.3.1-1
+     - erlang-erl-docgen=1:23.3.1-1
+     - erlang-et=1:23.3.1-1
+     - erlang-eunit=1:23.3.1-1
+     - erlang-examples=1:23.3.1-1
+     - erlang-ftp=1:23.3.1-1
+     - erlang-gs=1:23.3.1-1
+     - erlang-ic=1:23.3.1-1
+     - erlang-ic-java=1:23.3.1-1
+     - erlang-inets=1:23.3.1-1
+     - erlang-inviso=1:23.3.1-1
+     - erlang-jinterface=1:23.3.1-1
+     - erlang-megaco=1:23.3.1-1
+     - erlang-mnesia=1:23.3.1-1
+     - erlang-mode=1:23.3.1-1
+     - erlang-observer=1:23.3.1-1
+     - erlang-odbc=1:23.3.1-1
+     - erlang-os-mon=1:23.3.1-1 
+     - erlang-parsetools=1:23.3.1-1
+     - erlang-percept=1:23.3.1-1
+     - erlang-pman=1:23.3.1-1
+     - erlang-public-key=1:23.3.1-1
+     - erlang-reltool=1:23.3.1-1
+     - erlang-runtime-tools=1:23.3.1-1
+     - erlang-snmp=1:23.3.1-1 
+     - erlang-src=1:23.3.1-1
+     - erlang-ssh=1:23.3.1-1
+     - erlang-ssl=1:23.3.1-1
+     - erlang-syntax-tools=1:23.3.1-1
+     - erlang-test-server=1:23.3.1-1
+     - erlang-tftp=1:23.3.1-1
+     - erlang-toolbar=1:23.3.1-1
+     - erlang-tools=1:23.3.1-1
+     - erlang-tv=1:23.3.1-1
+     - erlang-typer=1:23.3.1-1
+     - erlang-wx=1:23.3.1-1
+     - erlang-xmerl=1:23.3.1-1
+     - erlang-nox=1:23.3.1-1
+
+- name: Installing RabbitMQ 
+  apt:
+    pkg:
+     - rabbitmq-server=3.8.14-1
